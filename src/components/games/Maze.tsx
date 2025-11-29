@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { RotateCcw, Flag } from 'lucide-react';
+import { RotateCcw, Flag, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const SIZE = 15;
 
@@ -61,72 +61,101 @@ export default function Maze() {
         generateMaze();
     }, [generateMaze]);
 
+    const move = useCallback((dx: number, dy: number) => {
+        if (won) return;
+
+        const nx = player.x + dx;
+        const ny = player.y + dy;
+
+        if (
+            nx >= 0 && nx < SIZE &&
+            ny >= 0 && ny < SIZE &&
+            maze[ny][nx] === 0
+        ) {
+            setPlayer({ x: nx, y: ny });
+            if (nx === goal.x && ny === goal.y) {
+                setWon(true);
+            }
+        }
+    }, [maze, player, goal, won]);
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (won) return;
-
-            let dx = 0;
-            let dy = 0;
-
-            if (e.key === 'ArrowUp') dy = -1;
-            if (e.key === 'ArrowDown') dy = 1;
-            if (e.key === 'ArrowLeft') dx = -1;
-            if (e.key === 'ArrowRight') dx = 1;
-
-            if (dx === 0 && dy === 0) return;
-
-            const nx = player.x + dx;
-            const ny = player.y + dy;
-
-            if (
-                nx >= 0 && nx < SIZE &&
-                ny >= 0 && ny < SIZE &&
-                maze[ny][nx] === 0
-            ) {
-                setPlayer({ x: nx, y: ny });
-                if (nx === goal.x && ny === goal.y) {
-                    setWon(true);
-                }
-            }
+            if (e.key === 'ArrowUp') move(0, -1);
+            if (e.key === 'ArrowDown') move(0, 1);
+            if (e.key === 'ArrowLeft') move(-1, 0);
+            if (e.key === 'ArrowRight') move(1, 0);
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [player, maze, goal, won]);
+    }, [move]);
 
     return (
-        <div className="flex flex-col items-center gap-6">
-            {won && <div className="text-2xl font-bold text-[var(--neon-green)]">You Escaped!</div>}
+        <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
+            {won && <div className="text-2xl font-bold text-[var(--neon-green)] animate-bounce">You Escaped!</div>}
 
-            <div
-                className="grid bg-black border-2 border-[var(--neon-purple)] p-2 rounded-lg"
-                style={{
-                    gridTemplateColumns: `repeat(${SIZE}, 20px)`,
-                    gap: '1px'
-                }}
-            >
-                {maze.map((row, y) => (
-                    row.map((cell, x) => {
-                        const isPlayer = player.x === x && player.y === y;
-                        const isGoal = goal.x === x && goal.y === y;
+            <div className="relative w-full aspect-square max-w-[350px]">
+                <div
+                    className="grid bg-black border-2 border-[var(--neon-purple)] p-1 rounded-lg w-full h-full"
+                    style={{
+                        gridTemplateColumns: `repeat(${SIZE}, 1fr)`,
+                        gap: '1px'
+                    }}
+                >
+                    {maze.map((row, y) => (
+                        row.map((cell, x) => {
+                            const isPlayer = player.x === x && player.y === y;
+                            const isGoal = goal.x === x && goal.y === y;
 
-                        return (
-                            <div
-                                key={`${x}-${y}`}
-                                className={`w-5 h-5 rounded-sm transition-colors duration-100
+                            return (
+                                <div
+                                    key={`${x}-${y}`}
+                                    className={`w-full h-full rounded-[1px] transition-colors duration-100
                   ${cell === 1 ? 'bg-gray-800' : 'bg-black'}
                   ${isPlayer ? 'bg-[var(--neon-blue)] shadow-[0_0_10px_var(--neon-blue)] z-10' : ''}
                   ${isGoal ? 'bg-[var(--neon-green)] animate-pulse' : ''}
                 `}
-                            >
-                                {isGoal && !isPlayer && <Flag className="w-full h-full text-black p-0.5" />}
-                            </div>
-                        );
-                    })
-                ))}
+                                >
+                                    {isGoal && !isPlayer && <Flag className="w-full h-full text-black p-px" />}
+                                </div>
+                            );
+                        })
+                    ))}
+                </div>
             </div>
 
-            <div className="flex gap-4">
+            {/* Mobile Controls */}
+            <div className="grid grid-cols-3 gap-2 mt-4 md:hidden">
+                <div />
+                <button
+                    className="p-4 bg-white/10 rounded-full active:bg-[var(--neon-blue)] transition-colors"
+                    onClick={() => move(0, -1)}
+                >
+                    <ArrowUp className="w-6 h-6 text-white" />
+                </button>
+                <div />
+                <button
+                    className="p-4 bg-white/10 rounded-full active:bg-[var(--neon-blue)] transition-colors"
+                    onClick={() => move(-1, 0)}
+                >
+                    <ArrowLeft className="w-6 h-6 text-white" />
+                </button>
+                <button
+                    className="p-4 bg-white/10 rounded-full active:bg-[var(--neon-blue)] transition-colors"
+                    onClick={() => move(0, 1)}
+                >
+                    <ArrowDown className="w-6 h-6 text-white" />
+                </button>
+                <button
+                    className="p-4 bg-white/10 rounded-full active:bg-[var(--neon-blue)] transition-colors"
+                    onClick={() => move(1, 0)}
+                >
+                    <ArrowRight className="w-6 h-6 text-white" />
+                </button>
+            </div>
+
+            <div className="flex gap-4 mt-4">
                 <button
                     onClick={generateMaze}
                     className="flex items-center gap-2 px-6 py-3 bg-[var(--neon-purple)] text-white font-bold rounded-full hover:bg-white hover:text-[var(--neon-purple)] transition-colors"
@@ -135,7 +164,7 @@ export default function Maze() {
                     New Maze
                 </button>
             </div>
-            <p className="text-gray-400 text-sm">Use Arrow Keys to Move</p>
+            <p className="text-gray-400 text-sm hidden md:block">Use Arrow Keys to Move</p>
         </div>
     );
 }
