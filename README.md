@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 AI Agentic Gameplay Benchmark (Built with Google Antigravity)
 
-## Getting Started
+> An interactive web-based game prototype developed as an agentic benchmark to test how effectively Google Antigravity handles real-time game loops, state management, physics/collision logic, and user input rendering.
 
-First, run the development server:
+![HTML5 / Canvas](https://img.shields.style/badge/HTML5-Canvas-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![JavaScript / React](https://img.shields.style/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Built with Google Antigravity](https://img.shields.style/badge/AI_Agentic_Dev-Google_Antigravity-4285F4?style=for-the-badge&logo=google&logoColor=white)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 Project Overview & AI Test Intent
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Unlike standard CRUD web apps, **game development requires continuous state updates, input event listening, frame-rate timing, and collision/physics detection**. 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project was built to stress-test **Google Antigravity**—an agentic development workspace—to evaluate its capability in handling:
+- Complex mathematical & conditional logic (game loops, score tracking, collision detection).
+- Multi-file component architecture and dynamic DOM / HTML5 Canvas rendering.
+- Autonomous debugging and state bug resolution without human intervention.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Key Game Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🕹️ **Interactive Gameplay Controls:** Keyboard / Touch input controls for player movement and actions.
+- ⚡ **Real-Time Game Loop:** State machine managing `Start`, `Playing`, `Paused`, and `Game Over` screens.
+- 🎯 **Score & Collision System:** Dynamic score tracking with collision detection algorithms.
+- 🎨 **Responsive UI / Canvas Render:** Adapts gameplay viewport seamlessly across mobile and desktop displays.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧪 Antigravity Evaluation Findings
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Test Parameter | Observation & Agent Capability |
+| :--- | :--- |
+| **Game Loop Logic** | Successfully generated frame-based update loops (`requestAnimationFrame`) with clean state updates. |
+| **Input Event Handling** | Handled keyboard and touch event listeners cleanly without memory leaks. |
+| **Agentic Debugging** | Automatically resolved state edge-cases and boundary collisions during multi-turn agent execution. |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛠️ Tech Stack
+
+- **Core Engine:** JavaScript (ES6+) / HTML5 Canvas or React State
+- **Styling:** Custom CSS3
+- **AI Agentic Workspace:** [Google Antigravity](https://developers.googleblog.com/build-with-google-antigravity-our-new-agentic-development-platform/)
+- **Deployment:** Vercel / GitHub Pages
+
+---
+
+## 🚀 How to Run Locally
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/your-username/antigravity-gameplay-test.git](https://github.com/your-username/antigravity-gameplay-test.git)
+   cd antigravity-gameplay-test
